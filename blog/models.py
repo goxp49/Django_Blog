@@ -10,7 +10,7 @@ class Article(models.Model):
     article_content = models.CharField(max_length=5000)
     article_cover = models.ImageField(upload_to='cover')
     article_ip = models.GenericIPAddressField()
-    article_author = models.OneToOneField(get_user_model(),null=True,on_delete=models.SET_NULL)
+    article_author = models.ForeignKey(get_user_model(),null=True,on_delete=models.SET_NULL)
     article_date = models.DateTimeField('last date of modify')
     article_hits = models.IntegerField()
 
