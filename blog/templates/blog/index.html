@@ -4,7 +4,7 @@
 {% block container_left %}
     {% for article1 in articles_all.articles_left %}
         <div class="box-item">
-            <img src="{% static  article1.cover  %}" class="img-responsive"/>
+            <img src="{{ MEDIA_URL }}{{ article1.cover }}" class="img-responsive"/>
             <div class="content">
                 <h3>{{ article1.title }}</h3>
                 <p>{{ article1.describe }}</p>
@@ -19,7 +19,7 @@
 {% block container_mid %}
     {% for article2 in articles_all.articles_mid %}
         <div class="box-item">
-            <img src="{% static  article2.cover  %}" class="img-responsive"/>
+            <img src=" {{ MEDIA_URL }}{{ article2.cover }}" class="img-responsive"/>
             <div class="content">
                 <h3>{{ article2.title }}</h3>
                 <p>{{ article2.describe }}</p>
@@ -34,7 +34,7 @@
 {% block container_right %}
 {% for article3 in articles_all.articles_right %}
         <div class="box-item">
-            <img src="{% static  article3.cover  %}" class="img-responsive"/>
+            <img src="{{ MEDIA_URL }}{{ article3.cover }}" class="img-responsive"/>
             <div class="content">
                 <h3>{{ article3.title }}</h3>
                 <p>{{ article3.describe }}</p>

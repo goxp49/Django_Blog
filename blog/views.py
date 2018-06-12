@@ -11,7 +11,7 @@ def index(request):
     for article in Article.objects.all():
         articles_number += 1
         temp_dict = {}
-        temp_dict['cover'] = article.article_cover
+        temp_dict['cover'] = str(article.article_cover)
         temp_dict['title'] = article.article_title
         temp_dict['describe'] = article.article_describe
         # 暂时使用id作为url----------------------------------------------------------
