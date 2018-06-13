@@ -20,6 +20,6 @@ from .settings import MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls')),
+    path('', include('blog.urls')),
     re_path(r'media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),#如果缺少这一段的话会导致media中的文件无法被找到
 ]

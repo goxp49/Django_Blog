@@ -26,5 +26,8 @@ def index(request):
     articles_all['articles_left'] = articles_left
     articles_all['articles_mid'] = articles_mid
     articles_all['articles_right'] = articles_right
-    print(articles_all['articles_left'])
+    #要通过dict的方式将参数传递给模板
     return render(request, 'blog/index.html', {'articles_all': articles_all})
+
+def single(request,pk):
+    return render(request, 'blog/single.html')
