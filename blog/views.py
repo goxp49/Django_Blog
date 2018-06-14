@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Article
 # Create your views here.
 
@@ -30,4 +30,27 @@ def index(request):
     return render(request, 'blog/index.html', {'articles_all': articles_all})
 
 def single(request,pk):
-    return render(request, 'blog/single.html')
+    article = {}
+    article_db = get_object_or_404(Article, id=pk)
+    #上方显示的文章主体
+    article['title'] = article_db.article_title
+    article['cover'] = str(article_db.article_cover)
+    article['content'] = article_db.article_content
+    article['author'] = article_db.article_author
+    article['date'] = article_db.article_date
+    #下方显示的其他文章
+    #exclude为不等于括号中内容的结果
+    #先给其他文章赋予默认图片和连接，搜索到正确数据后再覆盖
+    articles_number = 0
+    for other_article in Article.objects.exclude(id = pk).order_by('?')[:2]:
+        articles_number += 1
+        if (articles_number % 3) == 1:
+            article['other1_title'] = other_article.article_title
+            article['other1_cover'] = other_article.article_cover
+        elif (articles_number % 3) == 2:
+            article['other2_title'] = other_article.article_title
+            article['other2_cover'] = other_article.article_cover
+        elif (articles_number % 3) == 0:
+            article['other3_title'] = other_article.article_title
+            article['other3_cover'] = other_article.article_cover
+    return render(request, 'blog/single.html',{'article': article})
