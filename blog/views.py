@@ -1,5 +1,9 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Article
+import sys,os
+sys.path.append("..")
+from Django_Blog.settings import MEDIA_URL
+
 # Create your views here.
 
 def index(request):
@@ -41,16 +45,22 @@ def single(request,pk):
     #下方显示的其他文章
     #exclude为不等于括号中内容的结果
     #先给其他文章赋予默认图片和连接，搜索到正确数据后再覆盖
+    article['other1_cover'] = article['other2_cover'] = article['other3_cover'] ='cover/NoArticle.jpg'
+    article['other1_title'] = article['other2_title'] = article['other3_title'] ='快让博主多写几篇文章吧~~'
+    article['other1_id'] = article['other2_id'] = article['other3_id'] = pk
     articles_number = 0
     for other_article in Article.objects.exclude(id = pk).order_by('?')[:2]:
         articles_number += 1
         if (articles_number % 3) == 1:
             article['other1_title'] = other_article.article_title
             article['other1_cover'] = other_article.article_cover
+            article['other1_id'] = other_article.id
         elif (articles_number % 3) == 2:
             article['other2_title'] = other_article.article_title
             article['other2_cover'] = other_article.article_cover
+            article['other2_id'] = other_article.id
         elif (articles_number % 3) == 0:
             article['other3_title'] = other_article.article_title
             article['other3_cover'] = other_article.article_cover
+            article['other3_id'] = other_article.id
     return render(request, 'blog/single.html',{'article': article})

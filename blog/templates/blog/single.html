@@ -29,25 +29,26 @@
                             {{ article.content }}
                     </article>
                     <div class="widget wid-related">
-                        <div class="heading"><h4>Related Post</h4></div>
+                        <h5 class="page-header"></h5>
+                        <div class="heading"><h4>其他风景</h4></div>
                         <div class="content">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="#"><img src="{{ MEDIA_URL }}{{ article.cover }}"/></a>
-                                        <h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>
+                                        <a href="{% url 'blog:single' article.other1_id %}"><img src="{{ MEDIA_URL }}{{ article.other1_cover }}"/></a>
+                                        <h4><a href="{% url 'blog:single' article.other1_id %}">{{ article.other1_title }}</a></h4>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="#"><img src="images/8.jpg"/></a>
-                                        <h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>
+                                        <a href="{% url 'blog:single' article.other2_id %}"><img src="{{ MEDIA_URL }}{{ article.other2_cover }}"/></a>
+                                        <h4><a href="{% url 'blog:single' article.other2_id %}">{{ article.other2_title }} </a></h4>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="#"><img src="images/6.jpg"/></a>
-                                        <h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>
+                                        <a href="{% url 'blog:single' article.other3_id %}"><img src="{{ MEDIA_URL }}{{ article.other3_cover }}"/></a>
+                                        <h4><a href="{% url 'blog:single' article.other3_id %}">{{ article.other3_title }} </a></h4>
                                     </div>
                                 </div>
                             </div>
