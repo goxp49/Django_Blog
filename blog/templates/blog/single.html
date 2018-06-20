@@ -22,11 +22,11 @@
             <div class="row">
                 <div id="main-content">
                     <article>
-                        <img src="{{ MEDIA_URL }}{{ article.cover }}"/>
+                        <img src="{{ MEDIA_URL }}{{ article.cover }} " class="img-responsive center-block"/>
                         <div class="art-content">
                             <h1>{{ article.title }}</h1>
                             <div class="info">By <a href="#">{{ article.author }}</a> On {{ article.date }}</div>
-                            {{ article.content }}
+                            {{ article.content|safe }}
                     </article>
                     <div class="widget wid-related">
                         <h5 class="page-header"></h5>
@@ -35,19 +35,19 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="{% url 'blog:single' article.other1_id %}"><img src="{{ MEDIA_URL }}{{ article.other1_cover }}"/></a>
+                                        <a href="{% url 'blog:single' article.other1_id %}"><img src="{{ MEDIA_URL }}{{ article.other1_cover }}" class="other-article-img"/></a>
                                         <h4><a href="{% url 'blog:single' article.other1_id %}">{{ article.other1_title }}</a></h4>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="{% url 'blog:single' article.other2_id %}"><img src="{{ MEDIA_URL }}{{ article.other2_cover }}"/></a>
+                                        <a href="{% url 'blog:single' article.other2_id %}"><img src="{{ MEDIA_URL }}{{ article.other2_cover }}" class="other-article-img"/></a>
                                         <h4><a href="{% url 'blog:single' article.other2_id %}">{{ article.other2_title }} </a></h4>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="wrap-col">
-                                        <a href="{% url 'blog:single' article.other3_id %}"><img src="{{ MEDIA_URL }}{{ article.other3_cover }}"/></a>
+                                        <a href="{% url 'blog:single' article.other3_id %}"><img src="{{ MEDIA_URL }}{{ article.other3_cover }}" class="other-article-img"/></a>
                                         <h4><a href="{% url 'blog:single' article.other3_id %}">{{ article.other3_title }} </a></h4>
                                     </div>
                                 </div>
