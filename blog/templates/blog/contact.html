@@ -1,0 +1,113 @@
+{% extends "blog/__base__.html" %}
+{% load static %}
+
+{% block body_class %}
+ <body class="sub-page">
+{% endblock %}
+
+{% block carousel %}
+    <!-- Background Gradients-->
+	<div  class="site-gradients">
+		<div class="site-gradients-media">
+			<figure>
+				<img src="https://themedemos.webmandesign.eu/modern/wp-content/uploads/sites/8/2014/11/PcLGXNjMTdiFVKTrElCl__DSC2245.jpg" alt="PcLGXNjMTdiFVKTrElCl__DSC2245" srcset="https://themedemos.webmandesign.eu/modern/wp-content/uploads/sites/8/2014/11/PcLGXNjMTdiFVKTrElCl__DSC2245.jpg 1920w, https://themedemos.webmandesign.eu/modern/wp-content/uploads/sites/8/2014/11/PcLGXNjMTdiFVKTrElCl__DSC2245-420x280.jpg 420w, https://themedemos.webmandesign.eu/modern/wp-content/uploads/sites/8/2014/11/PcLGXNjMTdiFVKTrElCl__DSC2245-744x497.jpg 744w, https://themedemos.webmandesign.eu/modern/wp-content/uploads/sites/8/2014/11/PcLGXNjMTdiFVKTrElCl__DSC2245-1200x801.jpg 1200w" sizes="(max-width: 1617px) 100vw, 1617px" height="1080" width="1617">
+			</figure>
+		</div>
+	</div>
+{% endblock %}
+
+{% block page_content %}
+<div id="page-content" class="single-page">
+		<div class="container">
+			<div class="row">
+				<div id="main-content">
+					<article>
+						<div id="map-container"  tabindex="0">
+						</div>
+						<div class="art-content">
+							<div class="row">
+								<div class="col-md-4 box-item">
+									<h3>联系信息</h3>
+									<span>时光太瘦，指缝太宽。好多承诺被时间冲洗，被自己遗忘，被现实刁难。能够实现一个，对自己就不会那么失望。错过了，会遗憾。经历过，才耀眼。在最好的年华里，不要辜负最美的自己。</span><br> <br>
+									<p>福建省福州市福清市<br>
+										融侨经济开发区福政路</p>
+									   <p>+6221 888 888 90 <br>
+										+6221 888 88891</p>
+									<p>goxp49@163.com</p>
+								</div>
+								<div class="col-md-8">
+									<h3>联系方式</h3>
+									<form name="form1" method="post" action="contact.php">
+                                        {% csrf_token %}
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+												<input type="text" class="form-control input-lg" name="name" id="name" placeholder="请输入姓名" required="required" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<input type="email" class="form-control input-lg" name="email" id="email" placeholder="请输入邮箱" required="required" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control input-lg" name="subject" id="subject" placeholder="请输入标题" required="required" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+													placeholder="请输入内容" style="height: 190px;"></textarea>
+												</div>
+												<button type="submit" class="btn btn-skin btn-block" name="submitcontact" id="submitcontact">提交</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}
+
+{% block java_script %}
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=bd8ff20c7e020cef475f09528cdac73e"></script>
+    <script type="text/javascript">
+        var map = new AMap.Map('map-container', {
+            resizeEnable: true,
+        });
+        AMap.plugin(['AMap.ToolBar', 'AMap.Geolocation'], function () {
+            var toolbar = new AMap.ToolBar();
+            map.addControl(toolbar);
+            //初始化定位设定
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+                convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                showButton: true,        //显示定位按钮，默认：true
+                buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+                buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+                showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+                panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+                zoomToAccuracy: true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+
+        });
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+{% endblock %}

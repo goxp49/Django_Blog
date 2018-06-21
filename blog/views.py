@@ -123,3 +123,14 @@ def about(request):
             article['other3_cover'] = other_article.article_cover
             article['other3_id'] = other_article.id
     return render(request, 'blog/single.html',{'article': article})
+
+def contact(request):
+    article = {}
+    article_db = get_object_or_404(Article,article_category__category_name = '博客简介')
+    #上方显示的文章主体
+    article['title'] = article_db.article_title
+    article['cover'] = str(article_db.article_cover)
+    article['content'] = article_db.article_content
+    article['author'] = article_db.article_author
+    article['date'] = article_db.article_date
+    return render(request, 'blog/contact.html',{'article': article})

@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 import datetime
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -33,3 +34,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+
+class ContactForm(forms.Form):
+ name = forms.CharField(max_length=20)
+ subject = forms.CharField(max_length=100)
+ message = forms.Textarea()
+ email = forms.EmailField()
