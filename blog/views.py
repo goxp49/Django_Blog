@@ -135,6 +135,7 @@ def contact(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             email = form.cleaned_data['email']
+            sender_address = form.cleaned_data['sender_address']
             #如果使用代理服务器时也能或得到正确的IP地址
             try:
                 ip = request.META['HTTP_X_FORWARDED_FOR']
@@ -142,7 +143,7 @@ def contact(request):
                 ip = request.META['REMOTE_ADDR']
 
             try:
-                Message.objects.create(sender=name, subject=subject, message=message, email=email, date=datetime.datetime.now(),
+                Message.objects.create(sender=name, subject=subject, message=message, email=email, sender_address=sender_address,
                                        ipaddress=ip)
             except:
                 HttpResponse("服务器正忙，请稍后再试~")

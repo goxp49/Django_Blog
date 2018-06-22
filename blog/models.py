@@ -39,8 +39,9 @@ class Message(models.Model):
     sender = models.CharField(max_length=20,unique=True,verbose_name='寄件人')
     subject = models.TextField(max_length=100,verbose_name='主题')
     message = models.TextField(max_length=1000,verbose_name='信息')
+    sender_address = models.CharField(max_length=100,default='未获得地址信息',verbose_name='寄件人地址')
     email = models.EmailField(verbose_name='邮箱')
-    date = models.DateTimeField(verbose_name='寄件日期')
+    date = models.DateTimeField(default=timezone.now,verbose_name='寄件日期')
     ipaddress = models.GenericIPAddressField(verbose_name='寄件人IP地址')
 
     def was_send_recently(self):
