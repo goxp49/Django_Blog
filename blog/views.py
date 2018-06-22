@@ -1,9 +1,12 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Article
+from .models import Article,Message
+from django.http import HttpResponse
+# 引入创建的表单类
+from .forms import ContactForm
 import sys,os
 sys.path.append("..")
 from Django_Blog.settings import MEDIA_URL
-
+import datetime
 # Create your views here.
 
 def index(request):
@@ -125,12 +128,24 @@ def about(request):
     return render(request, 'blog/single.html',{'article': article})
 
 def contact(request):
-    article = {}
-    article_db = get_object_or_404(Article,article_category__category_name = '博客简介')
-    #上方显示的文章主体
-    article['title'] = article_db.article_title
-    article['cover'] = str(article_db.article_cover)
-    article['content'] = article_db.article_content
-    article['author'] = article_db.article_author
-    article['date'] = article_db.article_date
-    return render(request, 'blog/contact.html',{'article': article})
+    if request.method == 'POST':# 当提交表单时
+        form = ContactForm(request.POST)    # form 包含提交的数据
+        if form.is_valid():# 如果提交的数据合法
+            name = form.cleaned_data['name']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            email = form.cleaned_data['email']
+            #如果使用代理服务器时也能或得到正确的IP地址
+            try:
+                ip = request.META['HTTP_X_FORWARDED_FOR']
+            except:
+                ip = request.META['REMOTE_ADDR']
+
+            try:
+                Message.objects.create(sender=name, subject=subject, message=message, email=email, date=datetime.datetime.now(),
+                                       ipaddress=ip)
+            except:
+                HttpResponse("服务器正忙，请稍后再试~")
+    elif request.method == 'GET':# 当正常访问时
+        pass
+    return render(request, 'blog/contact.html')

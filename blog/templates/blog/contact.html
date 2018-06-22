@@ -37,7 +37,7 @@
 								</div>
 								<div class="col-md-8">
 									<h3>联系方式</h3>
-									<form name="form1" method="post" action="contact.php">
+									<form id="messageform" name="messageform" active="/contact/" method="post">
                                         {% csrf_token %}
 										<div class="row">
 											<div class="col-md-6">
@@ -64,7 +64,7 @@
 													<textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
 													placeholder="请输入内容" style="height: 190px;"></textarea>
 												</div>
-												<button type="submit" class="btn btn-skin btn-block" name="submitcontact" id="submitcontact">提交</button>
+												<button type="button" class="btn btn-skin btn-block" name="submitmessage" id="submitmessage">提交</button>
 											</div>
 										</div>
 									</form>
@@ -82,11 +82,11 @@
 {% block java_script %}
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=bd8ff20c7e020cef475f09528cdac73e"></script>
     <script type="text/javascript">
-        var map = new AMap.Map('map-container', {
+        let map = new AMap.Map('map-container', {
             resizeEnable: true,
         });
         AMap.plugin(['AMap.ToolBar', 'AMap.Geolocation'], function () {
-            var toolbar = new AMap.ToolBar();
+            let toolbar = new AMap.ToolBar();
             map.addControl(toolbar);
             //初始化定位设定
             geolocation = new AMap.Geolocation({
@@ -106,8 +106,28 @@
             geolocation.getCurrentPosition();
             AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
             AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+            //获取用户所在城市信息
+            function onComplete(data) {
+                let str = ['定位成功'];
+                str.push('经度：' + data.position.getLng());
+                str.push('纬度：' + data.position.getLat());
+                if (data.accuracy) {
+                    str.push('精度：' + data.accuracy + ' 米');
+                }//如为IP精确定位结果则没有精度信息
+                str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+                //document.getElementById('tip').innerHTML = str.join('<br>');
+                alert(data.addressComponent.city);
+            }
 
         });
     </script>
     <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#submitmessage").click(function () {
+                $("#messageform").submit();
+                alert("表单提交成功！");
+            });
+        });
+    </script>
 {% endblock %}
